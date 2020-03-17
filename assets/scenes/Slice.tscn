@@ -4,4 +4,4 @@
 
 [node name="Slice" type="Sprite"]
 texture = ExtResource( 1 )
-vframes = 3
+vframes = 5

@@ -21,6 +21,8 @@ onready var fail_prompt := $UI/LevelFailedPrompt
 export(int) var patty_count : int
 export(int) var tomato_count : int
 export(int) var lettuce_count : int
+export(int) var onion_count : int
+export(int) var cheese_count : int
 
 # What slices do we need to win the level?
 var required_slice_count : Array
@@ -45,7 +47,7 @@ func _ready() -> void:
 	white_block_cells = tm.get_used_cells_by_id(EMPTY_WHITE)
 	
 	# Build required slice array
-	required_slice_count = [patty_count,tomato_count,lettuce_count]
+	required_slice_count = [patty_count,tomato_count,lettuce_count,onion_count,cheese_count]
 	
 	# Create order
 	reciept_label.text = "Order:"

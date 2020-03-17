@@ -1,7 +1,7 @@
 extends Area2D
 tool
 
-export(int, "Patty", "Tomato", "Lettuce") var slice_type : int setget set_slice_type
+export(int, "Patty", "Tomato", "Lettuce", "Onion", "Cheese") var slice_type : int setget set_slice_type
 
 onready var sprite := $Sprite
 
