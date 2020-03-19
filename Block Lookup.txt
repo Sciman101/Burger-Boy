@@ -1,0 +1,25 @@
+0 - Empty Space
+1 - Solid Block
+2 - One-Way platform
+3 - Start
+4 - Goal
+5 - Red Toggle Block
+6 - White Toggle Block
+7 - Toggle Switch
+8 - 
+9 - 
+a - Patty
+b - Tomato
+c - Lettuce
+d - Onion
+e - Cheese
+f - 
+
+Data format:
+
+0 - Format
+1 - 
+2
+3
+4
+5

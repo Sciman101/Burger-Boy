@@ -6,7 +6,7 @@ export(int, "Patty", "Tomato", "Lettuce", "Onion", "Cheese") var slice_type : in
 onready var sprite := $Sprite
 
 func set_slice_type(val:int) -> void:
-	slice_type = max(0,val)
+	slice_type = val if val > 0 else 0
 	$Sprite.region_rect.position.y = slice_type * 16
 
 

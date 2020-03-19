@@ -1,20 +1,25 @@
 extends KinematicBody2D
 
-const SLICE = preload("res://assets/scenes/Slice.tscn")
+const SLICE = preload("res://assets/scenes/partial/Slice.tscn")
 
 export(float) var move_speed : float
 export(float) var jump_height : float
 export(float) var jump_time : float
 
+# Where did the player start?
 var start_pos : Vector2
 
+# Jumping properties
 var jump_speed : float
 var gravity : float
 
+# Motion vector
 var motion : Vector2
 
+# Array of slices we've collected
 var slices = []
 
+# Collision objects
 var shape : RectangleShape2D
 onready var collider := $CollisionShape2D
 
