@@ -50,6 +50,7 @@ var ready_to_finish : bool
 var toggle_blocks_active : bool = false # By default, RED blocks are solid and WHITE blocks are hollow
 var red_block_cells : Array
 var white_block_cells : Array
+var switch_sprites : Array
 
 signal level_restart
 signal on_level_completed
@@ -62,6 +63,7 @@ func _ready() -> void:
 			generate_level(level_code)
 			
 			var comp = Global.compress_level_data(level_code)
+			print(comp)
 			print(Global.decompress_level_data(comp))
 			
 			
@@ -121,10 +123,10 @@ func generate_level(code:String) -> void:
 				var inst = block.instance()
 				if indx != 7:
 					add_child(inst)
-					inst.position = pos * 16
 				else:
 					toggle.add_child(inst)
-				inst.position += Vector2.ONE*8
+					switch_sprites.append(inst.get_node("Sprite"))
+				inst.position = pos * 16 + Vector2.ONE*8
 		
 		# Update position
 		pos.x += 1
@@ -202,6 +204,10 @@ func flip_toggle_blocks() -> void:
 		tm.set_cellv(cell,red_target)
 	for cell in white_block_cells:
 		tm.set_cellv(cell,white_target)
+	
+	# Flip sprites
+	for sprite in switch_sprites:
+		sprite.region_rect.position.y = 16 - sprite.region_rect.position.y
 
 # Called when the player enters a flip area
 func _on_ToggleSwitch_body_entered(body):
