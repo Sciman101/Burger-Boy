@@ -7,7 +7,7 @@ onready var sprite := $Sprite
 
 func set_slice_type(val:int) -> void:
 	slice_type = val if val > 0 else 0
-	$Sprite.region_rect.position.y = slice_type * 16
+	$Sprite.region_rect.position.x = 32 + slice_type * 16
 
 
 func _on_SlicePickup_body_entered(body:PhysicsBody2D) -> void:

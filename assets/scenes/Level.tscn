@@ -69,4 +69,6 @@ tile_data = PoolIntArray( 0, 0, 4, 1, 0, 196609, 2, 0, 196609, 3, 0, 196609, 4, 
 __meta__ = {
 "_editor_description_": "20x12"
 }
+
+[node name="Instances" type="Node2D" parent="."]
 [connection signal="body_entered" from="ToggleSwitch" to="." method="_on_ToggleSwitch_body_entered"]

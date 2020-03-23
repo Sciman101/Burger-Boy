@@ -1,15 +1,48 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/tiles/LevelTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://src/Editor.gd" type="Script" id=2]
+[ext_resource path="res://assets/scenes/Level.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/tiles/tiles.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/Square.png" type="Texture" id=5]
+
+[sub_resource type="Curve" id=1]
+max_value = 1.5
+_data = [ Vector2( 0, 0.9 ), 0.0, 2.80831, 0, 0, Vector2( 1, 1.5 ), -0.180682, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0.0899471, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
 [node name="Editor" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 160, 96 )
-
-[node name="TileMap" type="TileMap" parent="."]
+[node name="EditorTilemap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
+collision_layer = 0
+collision_mask = 0
 format = 1
+tile_data = PoolIntArray( 0, 0, 4, 1, 0, 196609, 2, 0, 196609, 3, 0, 196609, 4, 0, 196609, 5, 0, 196609, 6, 0, 196609, 7, 0, 196609, 8, 0, 196609, 9, 0, 196609, 10, 0, 196609, 11, 0, 196609, 12, 0, 196609, 13, 0, 196609, 14, 0, 196609, 15, 0, 196609, 16, 0, 196609, 17, 0, 196609, 18, 0, 196609, 19, 0, 7, 65536, 0, 65539, 65555, 0, 65539, 131072, 0, 65539, 131091, 0, 65539, 196608, 0, 65539, 196627, 0, 65539, 262144, 0, 65539, 262163, 0, 65539, 327680, 0, 65539, 327699, 0, 65539, 393216, 0, 65539, 393235, 0, 65539, 458752, 0, 65539, 458754, 6, 0, 458769, 7, 0, 458771, 0, 65539, 524288, 0, 131076, 524289, 0, 1, 524290, 0, 1, 524291, 0, 1, 524292, 0, 1, 524293, 0, 1, 524294, 0, 1, 524295, 0, 1, 524296, 0, 1, 524297, 0, 1, 524298, 0, 1, 524299, 0, 1, 524300, 0, 1, 524301, 0, 1, 524302, 0, 1, 524303, 0, 1, 524304, 0, 1, 524305, 0, 1, 524306, 0, 1, 524307, 0, 131079, 589824, 0, 65536, 589825, 0, 65537, 589826, 0, 65537, 589827, 0, 65537, 589828, 0, 65537, 589829, 0, 65537, 589830, 0, 65537, 589831, 0, 65537, 589832, 0, 65537, 589833, 0, 65537, 589834, 0, 65537, 589835, 0, 65537, 589836, 0, 65537, 589837, 0, 65537, 589838, 0, 65537, 589839, 0, 65537, 589840, 0, 65537, 589841, 0, 65537, 589842, 0, 65537, 589843, 0, 65538, 655360, 0, 65536, 655361, 0, 65537, 655362, 0, 65537, 655363, 0, 65537, 655364, 0, 65537, 655365, 0, 65537, 655366, 0, 65537, 655367, 0, 65537, 655368, 0, 65537, 655369, 0, 65537, 655370, 0, 65537, 655371, 0, 65537, 655372, 0, 65537, 655373, 0, 65537, 655374, 0, 65537, 655375, 0, 65537, 655376, 0, 65537, 655377, 0, 65537, 655378, 0, 65537, 655379, 0, 65538, 720896, 0, 131072, 720897, 0, 131073, 720898, 0, 131073, 720899, 0, 131073, 720900, 0, 131073, 720901, 0, 131073, 720902, 0, 131073, 720903, 0, 131073, 720904, 0, 131073, 720905, 0, 131073, 720906, 0, 131073, 720907, 0, 131073, 720908, 0, 131073, 720909, 0, 131073, 720910, 0, 131073, 720911, 0, 131073, 720912, 0, 131073, 720913, 0, 131073, 720914, 0, 131073, 720915, 0, 131074 )
+
+[node name="PlacementParticles" type="CPUParticles2D" parent="."]
+position = Vector2( 295.494, 56.8406 )
+emitting = false
+amount = 1
+lifetime = 0.25
+one_shot = true
+local_coords = false
+texture = ExtResource( 5 )
+gravity = Vector2( 0, 0 )
+scale_amount_curve = SubResource( 1 )
+color_ramp = SubResource( 2 )
+
+[node name="EditorLevel" parent="." instance=ExtResource( 3 )]
+visible = false
+
+[node name="CursorPreview" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.5 )
+texture = ExtResource( 4 )
+offset = Vector2( 8, 8 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 16, 16 )

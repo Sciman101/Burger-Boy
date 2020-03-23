@@ -22,6 +22,9 @@ const EMPTY_WHITE := 4
 
 # Reference to tilemaps
 onready var tm := $TileMap
+# Parent for all instances - this includes slices and players and goals
+onready var inst_parent := $Instances
+onready var toggle_parent := $ToggleSwitch
 
 # Ui elements
 onready var reciept_label := $UI/OrderReceipt/Label
@@ -65,19 +68,8 @@ func _ready() -> void:
 			var comp = Global.compress_level_data(level_code)
 			print(comp)
 			print(Global.decompress_level_data(comp))
-			
-			
 		else:
-			print("Warning: Ivalid level code!")
-	
-	# Find all switchable blocks
-	red_block_cells = tm.get_used_cells_by_id(BLOCK_RED)
-	white_block_cells = tm.get_used_cells_by_id(EMPTY_WHITE)
-	
-	# Build required slice array
-	required_slice_count = [patty_count,tomato_count,lettuce_count,onion_count,cheese_count]
-	
-	update_order_desc()
+			print("Warning: Invalid level code!")
 
 
 func _input(event:InputEvent) -> void:
@@ -107,8 +99,6 @@ func generate_level(code:String) -> void:
 	tm.clear()
 	var pos : Vector2
 	
-	var toggle = $ToggleSwitch
-	
 	for c in range(6,246):
 		var indx = Global.hexcorrect(data[c])
 		# Figure out what we're doing
@@ -122,9 +112,9 @@ func generate_level(code:String) -> void:
 				# Spawn instance
 				var inst = block.instance()
 				if indx != 7:
-					add_child(inst)
+					inst_parent.add_child(inst)
 				else:
-					toggle.add_child(inst)
+					toggle_parent.add_child(inst)
 					switch_sprites.append(inst.get_node("Sprite"))
 				inst.position = pos * 16 + Vector2.ONE*8
 		
@@ -133,6 +123,16 @@ func generate_level(code:String) -> void:
 		if pos.x >= 20:
 			pos.x = 0
 			pos.y += 1
+	
+	# Find all switchable blocks
+	red_block_cells = tm.get_used_cells_by_id(BLOCK_RED)
+	white_block_cells = tm.get_used_cells_by_id(EMPTY_WHITE)
+	
+	# Build required slice array
+	required_slice_count = [patty_count,tomato_count,lettuce_count,onion_count,cheese_count]
+	
+	# Update the label showing the order
+	update_order_desc()
 
 
 func update_order_desc() -> void:
@@ -161,6 +161,17 @@ func restart_level() -> void:
 	update_order_desc()
 	
 	emit_signal("level_restart")
+
+
+# Used to clear all instances and tilemap data for the level
+# This is only really used by the editor for when we regenerate the level
+func destroy_level() -> void:
+	tm.clear()
+	for child in inst_parent.get_children():
+		child.queue_free()
+	for button in toggle_parent.get_children():
+		button.queue_free()
+	switch_sprites.clear()
 
 
 # Called when the player grabs a slice
